@@ -2,8 +2,21 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Spin } from 'antd';
 import { AuthProvider, useAuth } from './auth/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { HomePage } from './pages/HomePage';
+import { AdminLayout } from './app/AdminLayout';
 import { LoginPage } from './pages/LoginPage';
+import { DashboardPage } from './features/dashboard/pages/DashboardPage';
+import { OrdersListPage } from './features/orders/pages/OrdersListPage';
+import { OrderDetailPage } from './features/orders/pages/OrderDetailPage';
+import { CatalogListPage } from './features/catalog/pages/CatalogListPage';
+import { ProductFormPage } from './features/catalog/pages/ProductFormPage';
+import { EventsListPage } from './features/events/pages/EventsListPage';
+import { EventFormPage } from './features/events/pages/EventFormPage';
+import { NewsListPage } from './features/news/pages/NewsListPage';
+import { NewsFormPage } from './features/news/pages/NewsFormPage';
+import { WineStoresListPage } from './features/wineStores/pages/WineStoresListPage';
+import { WineStoreFormPage } from './features/wineStores/pages/WineStoreFormPage';
+import { CustomersListPage } from './features/customers/pages/CustomersListPage';
+import { CustomerDetailPage } from './features/customers/pages/CustomerDetailPage';
 
 function CatchAllRedirect() {
   const { status } = useAuth();
@@ -23,14 +36,39 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+
       <Route
-        path="/"
         element={
           <ProtectedRoute>
-            <HomePage />
+            <AdminLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/" element={<DashboardPage />} />
+
+        <Route path="/orders" element={<OrdersListPage />} />
+        <Route path="/orders/:id" element={<OrderDetailPage />} />
+
+        <Route path="/catalog" element={<CatalogListPage />} />
+        <Route path="/catalog/new" element={<ProductFormPage />} />
+        <Route path="/catalog/:id" element={<ProductFormPage />} />
+
+        <Route path="/events" element={<EventsListPage />} />
+        <Route path="/events/new" element={<EventFormPage />} />
+        <Route path="/events/:id" element={<EventFormPage />} />
+
+        <Route path="/news" element={<NewsListPage />} />
+        <Route path="/news/new" element={<NewsFormPage />} />
+        <Route path="/news/:id" element={<NewsFormPage />} />
+
+        <Route path="/wine-stores" element={<WineStoresListPage />} />
+        <Route path="/wine-stores/new" element={<WineStoreFormPage />} />
+        <Route path="/wine-stores/:id" element={<WineStoreFormPage />} />
+
+        <Route path="/customers" element={<CustomersListPage />} />
+        <Route path="/customers/:id" element={<CustomerDetailPage />} />
+      </Route>
+
       <Route path="*" element={<CatchAllRedirect />} />
     </Routes>
   );

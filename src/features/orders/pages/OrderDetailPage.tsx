@@ -19,22 +19,7 @@ import type { OrderedProductItem, OrderStatusOption } from '../../../api/orders/
 import { useOrder } from '../hooks/useOrder';
 import { useOrderMutations } from '../hooks/useOrderMutations';
 import { getStatusColor, getStatusLabel, isTerminalStatus } from '../orderStatus';
-
-function formatDateTime(value: string): string {
-  return new Date(value).toLocaleString('ru-RU');
-}
-
-function formatDate(value: string): string {
-  return new Date(value).toLocaleDateString('ru-RU');
-}
-
-function formatMoney(amount: number): string {
-  return new Intl.NumberFormat('ru-RU', {
-    style: 'currency',
-    currency: 'RUB',
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
+import { formatDate, formatDateTime, formatMoney } from '../../../shared/format';
 
 export function OrderDetailPage() {
   const { id } = useParams<{ id: string }>();

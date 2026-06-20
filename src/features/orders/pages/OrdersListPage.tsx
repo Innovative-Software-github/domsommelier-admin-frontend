@@ -12,22 +12,7 @@ import { getWineStores } from '../../../api/wineStores/requests';
 import type { WineStore } from '../../../api/wineStores/interfaces';
 import { useOrders } from '../hooks/useOrders';
 import { getStatusColor, getStatusLabel } from '../orderStatus';
-
-function formatDateTime(value: string): string {
-  return new Date(value).toLocaleString('ru-RU');
-}
-
-function formatMoney(amount: number): string {
-  return new Intl.NumberFormat('ru-RU', {
-    style: 'currency',
-    currency: 'RUB',
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
-function shortId(id: string): string {
-  return id.slice(0, 8);
-}
+import { formatDateTime, formatMoney, shortId } from '../../../shared/format';
 
 export function OrdersListPage() {
   const navigate = useNavigate();

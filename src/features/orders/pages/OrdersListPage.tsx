@@ -31,7 +31,7 @@ export function OrdersListPage() {
       try {
         const [statusList, storesPage] = await Promise.all([
           getOrderStatuses(),
-          getWineStores(0, 100),
+          getWineStores({ page: 0, size: 100 }),
         ]);
         if (!cancelled) {
           setStatuses(statusList);

@@ -35,3 +35,20 @@ export interface WineStoresQueryParams {
 }
 
 export type WineStoresPage = Page<WineStore>;
+
+export interface StoreStockItem {
+  productId: string;
+  article: string;
+  name: string;
+  category: string;
+  price: number;
+  quantity: number;
+}
+
+export interface StoreStockQueryParams {
+  page?: number;
+  size?: number;
+  search?: string;
+}
+
+export type StoreStockPage = Page<StoreStockItem>;

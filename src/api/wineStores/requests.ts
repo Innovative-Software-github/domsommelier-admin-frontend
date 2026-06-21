@@ -1,6 +1,9 @@
 import { customFetch } from '../config/customFetch';
 import type { QueryParamValue } from '../config/interfaces';
 import type {
+  StoreStockItem,
+  StoreStockPage,
+  StoreStockQueryParams,
   WineStore,
   WineStoreRequestBody,
   WineStoresPage,
@@ -41,4 +44,29 @@ export function deleteWineStore(id: number): Promise<void> {
     method: 'DELETE',
     withAuth: true,
   });
+}
+
+export function getStoreStock(
+  storeId: number,
+  params: StoreStockQueryParams = {},
+): Promise<StoreStockPage> {
+  return customFetch<StoreStockPage>(`/api/v1/admin/wine-stores/${storeId}/stock`, {
+    withAuth: true,
+    params: params as Record<string, QueryParamValue>,
+  });
+}
+
+export function updateStoreStock(
+  storeId: number,
+  productId: string,
+  quantity: number,
+): Promise<StoreStockItem> {
+  return customFetch<StoreStockItem>(
+    `/api/v1/admin/wine-stores/${storeId}/stock/${productId}`,
+    {
+      method: 'PUT',
+      body: { quantity },
+      withAuth: true,
+    },
+  );
 }

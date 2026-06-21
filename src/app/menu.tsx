@@ -3,6 +3,7 @@ import {
   AppstoreOutlined,
   CalendarOutlined,
   DashboardOutlined,
+  EnvironmentOutlined,
   ReadOutlined,
   ShopOutlined,
   ShoppingCartOutlined,
@@ -27,6 +28,7 @@ export const MENU_ITEMS: MenuItemConfig[] = [
   { key: '/events', label: 'Мероприятия', icon: <CalendarOutlined /> },
   { key: '/news', label: 'Новости', icon: <ReadOutlined /> },
   { key: '/wine-stores', label: 'Винотеки', icon: <ShopOutlined /> },
+  { key: '/cities', label: 'Города', icon: <EnvironmentOutlined /> },
   { key: '/customers', label: 'Клиенты', icon: <TeamOutlined /> },
 ];
 

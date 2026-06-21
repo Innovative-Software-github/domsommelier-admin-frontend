@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, message, Popconfirm, Select, Space } from 'antd';
-import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { DatabaseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { getWineStores } from '../../../api/wineStores/requests';
 import type { WineStore } from '../../../api/wineStores/interfaces';
@@ -117,9 +117,16 @@ export function WineStoresListPage() {
     {
       title: 'Действия',
       key: 'actions',
-      width: 180,
+      width: 280,
       render: (_, record) => (
         <Space onClick={(event) => event.stopPropagation()}>
+          <Button
+            type="link"
+            icon={<DatabaseOutlined />}
+            onClick={() => navigate(`/wine-stores/${record.id}/stock`)}
+          >
+            Склад
+          </Button>
           <Button
             type="link"
             icon={<EditOutlined />}

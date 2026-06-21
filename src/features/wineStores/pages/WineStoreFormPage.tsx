@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Card, Form, Input, InputNumber, Space, Spin, message } from 'antd';
+import { Button, Card, Form, Input, InputNumber, Select, Space, Spin, message } from 'antd';
 import { PageHeader } from '../../../components/PageHeader';
 import { WineStoreLocationPicker } from '../components/WineStoreLocationPickerLazy';
+import { useActiveCities } from '../../cities/hooks/useActiveCities';
 import { useWineStore } from '../hooks/useWineStore';
 import { useWineStoreMutations } from '../hooks/useWineStoreMutations';
 import {
@@ -20,6 +21,7 @@ export function WineStoreFormPage() {
   const [form] = Form.useForm<WineStoreFormValues>();
   const { wineStore, loading, error } = useWineStore(id);
   const { saving, create, update } = useWineStoreMutations();
+  const { cities, loading: citiesLoading } = useActiveCities();
 
   const latitude = Form.useWatch('latitude', form) ?? DEFAULT_FORM_VALUES.latitude;
   const longitude = Form.useWatch('longitude', form) ?? DEFAULT_FORM_VALUES.longitude;
@@ -90,7 +92,15 @@ export function WineStoreFormPage() {
           </Form.Item>
           <Space size="large" align="start" wrap style={{ width: '100%' }}>
             <Form.Item name="city" label="Город" rules={WINE_STORE_FORM_RULES.city}>
-              <Input placeholder="москва" style={{ width: 240 }} />
+              <Select
+                placeholder="Выберите город"
+                style={{ width: 240 }}
+                loading={citiesLoading}
+                showSearch
+                optionFilterProp="label"
+                options={cities.map((city) => ({ value: city.slug, label: city.name }))}
+                notFoundContent={citiesLoading ? 'Загрузка…' : 'Сначала заведите город в разделе «Города»'}
+              />
             </Form.Item>
             <Form.Item name="district" label="Район" rules={WINE_STORE_FORM_RULES.district}>
               <Input placeholder="центральный" style={{ width: 240 }} />

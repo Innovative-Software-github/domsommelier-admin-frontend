@@ -15,6 +15,8 @@ import { NewsListPage } from './features/news/pages/NewsListPage';
 import { NewsFormPage } from './features/news/pages/NewsFormPage';
 import { WineStoresListPage } from './features/wineStores/pages/WineStoresListPage';
 import { WineStoreFormPage } from './features/wineStores/pages/WineStoreFormPage';
+import { WineStoreStockPage } from './features/wineStores/pages/WineStoreStockPage';
+import { CitiesListPage } from './features/cities/pages/CitiesListPage';
 import { CustomersListPage } from './features/customers/pages/CustomersListPage';
 import { CustomerDetailPage } from './features/customers/pages/CustomerDetailPage';
 
@@ -64,6 +66,9 @@ function AppRoutes() {
         <Route path="/wine-stores" element={<WineStoresListPage />} />
         <Route path="/wine-stores/new" element={<WineStoreFormPage />} />
         <Route path="/wine-stores/:id" element={<WineStoreFormPage />} />
+        <Route path="/wine-stores/:id/stock" element={<WineStoreStockPage />} />
+
+        <Route path="/cities" element={<CitiesListPage />} />
 
         <Route path="/customers" element={<CustomersListPage />} />
         <Route path="/customers/:id" element={<CustomerDetailPage />} />

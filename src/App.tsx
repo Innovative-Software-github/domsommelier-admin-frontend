@@ -7,6 +7,8 @@ import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './features/dashboard/pages/DashboardPage';
 import { OrdersListPage } from './features/orders/pages/OrdersListPage';
 import { OrderDetailPage } from './features/orders/pages/OrderDetailPage';
+import { EventOrdersListPage } from './features/eventOrders/pages/EventOrdersListPage';
+import { EventOrderDetailPage } from './features/eventOrders/pages/EventOrderDetailPage';
 import { CatalogListPage } from './features/catalog/pages/CatalogListPage';
 import { ProductFormPage } from './features/catalog/pages/ProductFormPage';
 import { EventsListPage } from './features/events/pages/EventsListPage';
@@ -50,6 +52,9 @@ function AppRoutes() {
 
         <Route path="/orders" element={<OrdersListPage />} />
         <Route path="/orders/:id" element={<OrderDetailPage />} />
+
+        <Route path="/event-orders" element={<EventOrdersListPage />} />
+        <Route path="/event-orders/:id" element={<EventOrderDetailPage />} />
 
         <Route path="/catalog" element={<CatalogListPage />} />
         <Route path="/catalog/new" element={<ProductFormPage />} />

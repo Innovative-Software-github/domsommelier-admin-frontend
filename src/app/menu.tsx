@@ -4,6 +4,7 @@ import {
   CalendarOutlined,
   DashboardOutlined,
   EnvironmentOutlined,
+  FormOutlined,
   ReadOutlined,
   ShopOutlined,
   ShoppingCartOutlined,
@@ -24,6 +25,7 @@ export interface MenuItemConfig {
 export const MENU_ITEMS: MenuItemConfig[] = [
   { key: '/', label: 'Дашборд', icon: <DashboardOutlined /> },
   { key: '/orders', label: 'Заказы', icon: <ShoppingCartOutlined /> },
+  { key: '/event-orders', label: 'Заявки на мероприятия', icon: <FormOutlined /> },
   { key: '/catalog', label: 'Каталог', icon: <AppstoreOutlined /> },
   { key: '/events', label: 'Мероприятия', icon: <CalendarOutlined /> },
   { key: '/news', label: 'Новости', icon: <ReadOutlined /> },

@@ -1,0 +1,52 @@
+name: Deploy
+
+# Пересобирает и перезапускает ТОЛЬКО контейнер админки на сервере — сам
+# сервер и остальные сервисы настраиваются из репозитория domsommelier-backend
+# (см. его docker-compose.yaml и .github/workflows/main.yml для самого
+# первого деплоя на новый сервер).
+#
+# Секреты, которые нужно завести в Settings → Secrets репозитория:
+#   HOST, SSH_PASSWORD — те же, что у domsommelier-backend (тот же сервер).
+#   VITE_YANDEX_MAPS_API_KEY — ключ Яндекс.Карт (вкатывается в сборку).
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VITE_YANDEX_MAPS_API_KEY: ${{ secrets.VITE_YANDEX_MAPS_API_KEY }}
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          username: root
+          host: ${{ secrets.HOST }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          envs: VITE_YANDEX_MAPS_API_KEY
+          script: |
+            REPO_DIR=~/projects/domsommelier-admin-frontend
+            BACKEND_DIR=~/projects/domsommelier-backend
+
+            if [ -d "$REPO_DIR/.git" ]; then
+              cd "$REPO_DIR" && git fetch origin main && git reset --hard origin/main
+            else
+              mkdir -p ~/projects
+              git clone git@github.com:Innovative-Software-github/domsommelier-admin-frontend.git "$REPO_DIR"
+            fi
+
+            cd "$BACKEND_DIR"
+            docker-compose build domsommelier-admin-frontend
+            docker-compose up -d --no-deps domsommelier-admin-frontend
+
+            sleep 5
+            if docker ps --filter "name=domsommelier-admin-frontend" --filter "status=running" -q | grep -q .; then
+              echo "==> Деплой успешен: domsommelier-admin-frontend запущен."
+            else
+              echo "==> Деплой FAILED: domsommelier-admin-frontend не запустился."
+              docker-compose logs --tail=50 domsommelier-admin-frontend
+              exit 1
+            fi

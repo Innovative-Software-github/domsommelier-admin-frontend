@@ -7,7 +7,6 @@ name: Deploy
 #
 # Секреты, которые нужно завести в Settings → Secrets репозитория:
 #   HOST, SSH_PASSWORD — те же, что у domsommelier-backend (тот же сервер).
-#   VITE_YANDEX_MAPS_API_KEY — ключ Яндекс.Карт (вкатывается в сборку).
 
 on:
   push:
@@ -17,8 +16,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      VITE_YANDEX_MAPS_API_KEY: ${{ secrets.VITE_YANDEX_MAPS_API_KEY }}
     steps:
       - name: Deploy to server
         uses: appleboy/ssh-action@master
@@ -26,7 +23,6 @@ jobs:
           username: root
           host: ${{ secrets.HOST }}
           password: ${{ secrets.SSH_PASSWORD }}
-          envs: VITE_YANDEX_MAPS_API_KEY
           script: |
             REPO_DIR=~/projects/domsommelier-admin-frontend
             BACKEND_DIR=~/projects/domsommelier-backend

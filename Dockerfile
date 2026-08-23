@@ -1,11 +1,10 @@
 # Админка (Vite/React) — статическая SPA-сборка, отдаётся через nginx.
-# VITE_* переменные вкатываются в бандл на этапе сборки (Vite так работает),
-# поэтому VITE_YANDEX_MAPS_API_KEY передаём как build ARG, а не рантайм-env.
+# Яндекс.Карты используются без API-ключа (неавторизованный режим, как и
+# на витрине domsommelier-frontend) — сознательное решение, чтобы не
+# заводить и не ротировать отдельный секрет ради карты в форме винотеки.
 
 FROM node:20-alpine AS builder
 WORKDIR /app
-ARG VITE_YANDEX_MAPS_API_KEY
-ENV VITE_YANDEX_MAPS_API_KEY=$VITE_YANDEX_MAPS_API_KEY
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .

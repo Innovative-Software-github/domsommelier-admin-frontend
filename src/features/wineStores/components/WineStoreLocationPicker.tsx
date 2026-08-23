@@ -39,8 +39,6 @@ export function WineStoreLocationPicker({
     [latitude, longitude],
   );
 
-  const apiKey = import.meta.env.VITE_YANDEX_MAPS_API_KEY as string | undefined;
-  const ymapsQuery = apiKey ? { apikey: apiKey } : undefined;
   const dragHandlerAttachedRef = useRef(false);
 
   const handleMapClick = (event: YMapsEvent) => {
@@ -102,7 +100,7 @@ export function WineStoreLocationPicker({
       </Space>
 
       <div style={{ height: 360, borderRadius: 8, overflow: 'hidden' }}>
-        <YMaps query={ymapsQuery}>
+        <YMaps>
           <Map
             width="100%"
             height="360px"

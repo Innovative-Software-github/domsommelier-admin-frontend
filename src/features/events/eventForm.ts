@@ -1,6 +1,6 @@
 import type { Rule } from 'antd/es/form';
 import dayjs, { type Dayjs } from 'dayjs';
-import type { EventDetails, EventRequestBody, EventType } from '../../api/events/interfaces';
+import type { EventDetails, EventRequestBody, EventType, FaqItem } from '../../api/events/interfaces';
 
 export interface EventFormValues {
   type: EventType;
@@ -12,6 +12,9 @@ export interface EventFormValues {
   registrationLink?: string;
   smallCover?: string;
   largeCover?: string;
+  about?: string;
+  howItGoes?: string;
+  faq?: FaqItem[];
 }
 
 export const DEFAULT_FORM_VALUES: EventFormValues = {
@@ -24,6 +27,9 @@ export const DEFAULT_FORM_VALUES: EventFormValues = {
   registrationLink: '',
   smallCover: '',
   largeCover: '',
+  about: '',
+  howItGoes: '',
+  faq: [],
 };
 
 export const EVENT_FORM_RULES: Record<keyof EventFormValues, Rule[]> = {
@@ -41,6 +47,9 @@ export const EVENT_FORM_RULES: Record<keyof EventFormValues, Rule[]> = {
   ],
   smallCover: [],
   largeCover: [],
+  about: [],
+  howItGoes: [],
+  faq: [],
 };
 
 function trimToUndefined(value?: string): string | undefined {
@@ -62,6 +71,9 @@ export function toFormValues(event: EventDetails): EventFormValues {
     registrationLink: event.registrationLink || undefined,
     smallCover: event.smallCover || undefined,
     largeCover: event.largeCover || undefined,
+    about: event.about || undefined,
+    howItGoes: event.howItGoes || undefined,
+    faq: event.faq ?? [],
   };
 }
 
@@ -80,5 +92,10 @@ export function toRequestBody(values: EventFormValues): EventRequestBody {
     registrationLink: trimToUndefined(values.registrationLink),
     smallCover: trimToUndefined(values.smallCover),
     largeCover: trimToUndefined(values.largeCover),
+    about: trimToUndefined(values.about),
+    howItGoes: trimToUndefined(values.howItGoes),
+    faq: (values.faq ?? [])
+      .map((item) => ({ question: item.question?.trim() ?? '', answer: item.answer?.trim() ?? '' }))
+      .filter((item) => item.question.length > 0 || item.answer.length > 0),
   };
 }

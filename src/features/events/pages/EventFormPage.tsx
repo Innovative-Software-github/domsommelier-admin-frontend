@@ -13,6 +13,7 @@ import {
   Spin,
   message,
 } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { getWineStores } from '../../../api/wineStores/requests';
 import type { WineStore } from '../../../api/wineStores/interfaces';
 import { PageHeader } from '../../../components/PageHeader';
@@ -177,6 +178,60 @@ export function EventFormPage() {
             rules={EVENT_FORM_RULES.registrationLink}
           >
             <Input placeholder="https://..." />
+          </Form.Item>
+        </Card>
+
+        <Card title="Страница мероприятия" style={{ marginBottom: 16 }}>
+          <Form.Item name="about" label="О мероприятии">
+            <Input.TextArea rows={4} placeholder="Что это за мероприятие, чем оно ценно" />
+          </Form.Item>
+          <Form.Item name="howItGoes" label="Как проходит">
+            <Input.TextArea rows={4} placeholder="Формат, программа, что включено" />
+          </Form.Item>
+
+          <Form.Item label="FAQ" style={{ marginBottom: 0 }}>
+            <Form.List name="faq">
+              {(fields, { add, remove }) => (
+                <Space direction="vertical" style={{ display: 'flex' }} size="middle">
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Card
+                      key={key}
+                      size="small"
+                      styles={{ body: { display: 'flex', gap: 12, alignItems: 'start' } }}
+                    >
+                      <div style={{ flex: 1 }}>
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'question']}
+                          label="Вопрос"
+                          style={{ marginBottom: 12 }}
+                        >
+                          <Input placeholder="Нужно ли бронировать заранее?" />
+                        </Form.Item>
+                        <Form.Item {...restField} name={[name, 'answer']} label="Ответ" style={{ marginBottom: 0 }}>
+                          <Input.TextArea rows={2} placeholder="Да, за 2 дня — мест ограниченное количество" />
+                        </Form.Item>
+                      </div>
+                      <Button
+                        type="text"
+                        danger
+                        icon={<DeleteOutlined />}
+                        onClick={() => remove(name)}
+                        aria-label="Удалить вопрос"
+                      />
+                    </Card>
+                  ))}
+                  <Button
+                    type="dashed"
+                    icon={<PlusOutlined />}
+                    onClick={() => add({ question: '', answer: '' })}
+                    block
+                  >
+                    Добавить вопрос
+                  </Button>
+                </Space>
+              )}
+            </Form.List>
           </Form.Item>
         </Card>
 

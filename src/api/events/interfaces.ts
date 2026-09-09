@@ -14,11 +14,19 @@ export interface EventListItem {
   wineStoreName: string | null;
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface EventDetails extends EventListItem {
   largeCover: string;
   address: string;
   description: string;
   registrationLink: string;
+  about?: string | null;
+  howItGoes?: string | null;
+  faq?: FaqItem[] | null;
 }
 
 export interface EventRequestBody {
@@ -31,6 +39,9 @@ export interface EventRequestBody {
   largeCover?: string;
   description?: string;
   registrationLink?: string;
+  about?: string;
+  howItGoes?: string;
+  faq?: FaqItem[];
 }
 
 export interface EventsQueryParams {

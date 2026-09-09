@@ -269,6 +269,15 @@ export function ProductFormPage() {
           <Form.Item name="description" label="Описание">
             <Input.TextArea rows={3} placeholder="Описание товара" />
           </Form.Item>
+          <Form.Item name="aroma" label="Аромат">
+            <Input.TextArea rows={3} placeholder="Описание аромата" />
+          </Form.Item>
+          <Form.Item name="taste" label="Вкус">
+            <Input.TextArea rows={3} placeholder="Описание вкуса" />
+          </Form.Item>
+          <Form.Item name="foodPairing" label="Гастропары">
+            <Input.TextArea rows={3} placeholder="С чем сочетается" />
+          </Form.Item>
         </Card>
 
         <Card title={`Характеристики: ${CATEGORY_LABELS[category]}`} style={{ marginBottom: 24 }}>

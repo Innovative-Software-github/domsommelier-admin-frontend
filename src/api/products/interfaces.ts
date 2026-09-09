@@ -39,6 +39,9 @@ export interface ProductDetail {
   initialPrice: number;
   price: number;
   description: string | null;
+  aroma: string | null;
+  taste: string | null;
+  foodPairing: string | null;
   discount: number | null;
   productCountry: string;
   productCategoryName: ProductCategory;
@@ -61,6 +64,9 @@ export interface ProductWriteBase {
   initialPrice: number;
   price: number;
   description?: string;
+  aroma?: string;
+  taste?: string;
+  foodPairing?: string;
   discount?: number;
   country: string;
 }

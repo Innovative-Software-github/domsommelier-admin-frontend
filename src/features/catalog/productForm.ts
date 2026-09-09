@@ -33,6 +33,9 @@ export interface ProductFormValues {
   initialPrice: number;
   price: number;
   description?: string;
+  aroma?: string;
+  taste?: string;
+  foodPairing?: string;
   discount?: number;
   country: string;
   producer?: string;
@@ -130,6 +133,9 @@ export function detailToFormValues(
     initialPrice: product.initialPrice,
     price: product.price,
     description: product.description ?? undefined,
+    aroma: product.aroma ?? undefined,
+    taste: product.taste ?? undefined,
+    foodPairing: product.foodPairing ?? undefined,
     discount: product.discount ?? undefined,
     country: product.productCountry,
     producer: str(d.producer),
@@ -177,6 +183,9 @@ export function toWriteRequest(
     initialPrice: values.initialPrice,
     price: values.price,
     description: trimToUndefined(values.description),
+    aroma: trimToUndefined(values.aroma),
+    taste: trimToUndefined(values.taste),
+    foodPairing: trimToUndefined(values.foodPairing),
     discount: values.discount ?? undefined,
     country: values.country,
   };

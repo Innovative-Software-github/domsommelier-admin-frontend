@@ -10,6 +10,7 @@ import {
   Select,
   Space,
   Spin,
+  Typography,
   message,
 } from 'antd';
 import { PageHeader } from '../../../components/PageHeader';
@@ -286,7 +287,13 @@ export function ProductFormPage() {
 
         <Card title="Фото" style={{ marginBottom: 24 }}>
           {isEdit && id ? (
-            <ProductPhotoManager productId={id} />
+            <>
+              <Typography.Text type="secondary" style={{ display: 'block', marginBottom: 12 }}>
+                Загрузка и удаление фото применяются сразу — кнопка «Сохранить» внизу их не
+                затрагивает и ничего не отменяет.
+              </Typography.Text>
+              <ProductPhotoManager productId={id} />
+            </>
           ) : (
             <Alert
               type="info"

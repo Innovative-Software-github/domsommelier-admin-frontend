@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  Alert,
   Button,
   Card,
   DatePicker,
@@ -11,6 +12,7 @@ import {
   Select,
   Space,
   Spin,
+  Typography,
   message,
 } from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
@@ -25,6 +27,7 @@ import {
   toRequestBody,
   type EventFormValues,
 } from '../eventForm';
+import { EventPhotoManager } from '../components/EventPhotoManager';
 import { useEvent } from '../hooks/useEvent';
 import { useEventMutations } from '../hooks/useEventMutations';
 
@@ -235,13 +238,28 @@ export function EventFormPage() {
           </Form.Item>
         </Card>
 
+        <Card title="Фото" style={{ marginBottom: 16 }}>
+          {isEdit && id ? (
+            <>
+              <Typography.Text type="secondary" style={{ display: 'block', marginBottom: 12 }}>
+                Загрузка и удаление применяются сразу, кнопка «Сохранить» ниже их не
+                затрагивает. Первое фото в списке используется как обложка мероприятия
+                на сайте.
+              </Typography.Text>
+              <EventPhotoManager eventId={id} />
+            </>
+          ) : (
+            <Alert
+              type="info"
+              showIcon
+              message="Сохраните мероприятие, затем добавьте фото в режиме редактирования."
+            />
+          )}
+        </Card>
+
+        {/* smallCover/largeCover больше не редактируются напрямую — обложка на
+            сайте теперь берётся из первого загруженного фото (см. Card «Фото» выше). */}
         <Form.Item name="description" hidden>
-          <Input />
-        </Form.Item>
-        <Form.Item name="smallCover" hidden>
-          <Input />
-        </Form.Item>
-        <Form.Item name="largeCover" hidden>
           <Input />
         </Form.Item>
 

@@ -35,6 +35,11 @@ export interface AdminOrderDetail {
   customerEmail: string | null;
   wineStoreId: number | null;
   promoDiscount: number | null;
+  /** Снапшот скидок на момент оформления. У заказов до внедрения скидок — null. */
+  itemsTotal: number | null;
+  saleDiscountAmount: number | null;
+  personalDiscountPercent: number | null;
+  personalDiscountAmount: number | null;
 }
 
 export interface OrderStatusOption {

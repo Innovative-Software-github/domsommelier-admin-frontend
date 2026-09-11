@@ -41,5 +41,5 @@ export function useCustomer(customerId: string | undefined) {
     void fetchCustomer(customerId);
   }, [fetchCustomer, customerId]);
 
-  return { customer, loading, error };
+  return { customer, loading, error, setCustomer };
 }

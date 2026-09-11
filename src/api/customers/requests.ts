@@ -6,6 +6,7 @@ import type {
   AdminCustomersPage,
   CustomerOrdersQueryParams,
   CustomersQueryParams,
+  UpdateCustomerDiscountRequest,
 } from './interfaces';
 
 export function getCustomers(params: CustomersQueryParams = {}): Promise<AdminCustomersPage> {
@@ -18,6 +19,18 @@ export function getCustomers(params: CustomersQueryParams = {}): Promise<AdminCu
 export function getCustomer(id: string): Promise<AdminCustomerDetail> {
   return customFetch<AdminCustomerDetail>(`/api/v1/admin/customers/${id}`, {
     withAuth: true,
+  });
+}
+
+/** Назначить или снять личную скидку клиента (percent = 0 снимает). */
+export function updateCustomerDiscount(
+  id: string,
+  body: UpdateCustomerDiscountRequest,
+): Promise<AdminCustomerDetail> {
+  return customFetch<AdminCustomerDetail>(`/api/v1/admin/customers/${id}/discount`, {
+    method: 'PATCH',
+    withAuth: true,
+    body,
   });
 }
 

@@ -152,7 +152,19 @@ export function OrderDetailPage() {
             <Descriptions.Item label="Промокод">
               {order.promoDiscount != null ? `−${order.promoDiscount}%` : '—'}
             </Descriptions.Item>
-            <Descriptions.Item label="Сумма">
+            {/* Снапшот скидок на момент оформления; у заказов до внедрения скидок его нет */}
+            <Descriptions.Item label="Товары">
+              {order.itemsTotal != null ? formatMoney(order.itemsTotal) : '—'}
+            </Descriptions.Item>
+            <Descriptions.Item label="Скидка по акции">
+              {order.saleDiscountAmount ? `−${formatMoney(order.saleDiscountAmount)}` : '—'}
+            </Descriptions.Item>
+            <Descriptions.Item label="Персональная скидка">
+              {order.personalDiscountAmount
+                ? `−${formatMoney(order.personalDiscountAmount)} (${order.personalDiscountPercent}%)`
+                : '—'}
+            </Descriptions.Item>
+            <Descriptions.Item label="Сумма к оплате">
               <strong>{formatMoney(order.totalAmount)}</strong>
             </Descriptions.Item>
           </Descriptions>

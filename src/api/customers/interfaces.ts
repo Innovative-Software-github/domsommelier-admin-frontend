@@ -8,6 +8,8 @@ export interface AdminCustomerListItem {
   phone: string | null;
   role: UserRole;
   defaultWineStoreName: string | null;
+  /** Личная скидка в процентах, 0 — скидки нет. */
+  discountPercent: number | null;
 }
 
 export interface AdminCustomerDetail {
@@ -21,6 +23,17 @@ export interface AdminCustomerDetail {
   role: UserRole;
   defaultWineStoreId: number | null;
   defaultWineStoreName: string | null;
+  /** Личная скидка в процентах, 0 — скидки нет. */
+  discountPercent: number | null;
+  /** Основание для скидки — видно только в админке. */
+  discountComment: string | null;
+  discountUpdatedAt: string | null;
+}
+
+export interface UpdateCustomerDiscountRequest {
+  /** 0 — снять скидку. */
+  percent: number;
+  comment?: string;
 }
 
 export interface AdminCustomerOrder {

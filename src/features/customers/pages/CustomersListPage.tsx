@@ -44,6 +44,15 @@ export function CustomersListPage() {
       render: (value: string | null) => value ?? '—',
     },
     {
+      title: 'Скидка',
+      dataIndex: 'discountPercent',
+      key: 'discountPercent',
+      width: 100,
+      align: 'right',
+      render: (percent: number | null) =>
+        percent ? <Tag color="red">−{percent}%</Tag> : '—',
+    },
+    {
       title: 'Роль',
       dataIndex: 'role',
       key: 'role',
@@ -57,7 +66,7 @@ export function CustomersListPage() {
     <>
       <PageHeader
         title="Клиенты"
-        subtitle="Просмотр клиентов и их заказов (read-only)."
+        subtitle="Клиенты, их заказы и персональные скидки."
       />
 
       <Form layout="inline" style={{ marginBottom: 16 }}>

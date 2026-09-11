@@ -7,13 +7,14 @@ import type { AdminCustomerOrder } from '../../../api/customers/interfaces';
 import { formatDateTime, formatMoney, shortId } from '../../../shared/format';
 import { getStatusColor, getStatusLabel } from '../../orders/orderStatus';
 import { getRoleColor, getRoleLabel } from '../customerRole';
+import { CustomerDiscountCard } from '../components/CustomerDiscountCard';
 import { useCustomer } from '../hooks/useCustomer';
 import { useCustomerOrders } from '../hooks/useCustomerOrders';
 
 export function CustomerDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { customer, loading, error } = useCustomer(id);
+  const { customer, loading, error, setCustomer } = useCustomer(id);
   const { page, loading: ordersLoading, error: ordersError, setPageNumber } = useCustomerOrders(id);
 
   const orderColumns: ColumnsType<AdminCustomerOrder> = [
@@ -105,6 +106,8 @@ export function CustomerDetailPage() {
           </Descriptions.Item>
         </Descriptions>
       </Card>
+
+      <CustomerDiscountCard customer={customer} onUpdated={setCustomer} />
 
       <Card title="Заказы">
         {ordersError && (

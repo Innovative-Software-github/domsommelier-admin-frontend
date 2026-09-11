@@ -36,7 +36,7 @@ export interface ProductFormValues {
   aroma?: string;
   taste?: string;
   foodPairing?: string;
-  discount?: number;
+  salePrice?: number;
   country: string;
   producer?: string;
   volume?: number;
@@ -78,7 +78,7 @@ export const FIELD_RULES: Record<string, Rule[]> = {
     { required: true, message: 'Укажите цену' },
     { type: 'number', min: 0, message: 'Цена не может быть отрицательной' },
   ],
-  discount: [{ type: 'number', min: 0, max: 100, message: 'Скидка 0–100%' }],
+  salePrice: [{ type: 'number', min: 0, message: 'Цена не может быть отрицательной' }],
   country: [{ required: true, message: 'Выберите страну' }],
   subcategory: [{ required: true, message: 'Выберите подкатегорию' }],
   color: [{ required: true, message: 'Выберите цвет' }],
@@ -136,7 +136,7 @@ export function detailToFormValues(
     aroma: product.aroma ?? undefined,
     taste: product.taste ?? undefined,
     foodPairing: product.foodPairing ?? undefined,
-    discount: product.discount ?? undefined,
+    salePrice: product.salePrice ?? undefined,
     country: product.productCountry,
     producer: str(d.producer),
     volume: parseNumber(d.volume),
@@ -186,7 +186,7 @@ export function toWriteRequest(
     aroma: trimToUndefined(values.aroma),
     taste: trimToUndefined(values.taste),
     foodPairing: trimToUndefined(values.foodPairing),
-    discount: values.discount ?? undefined,
+    salePrice: values.salePrice ?? undefined,
     country: values.country,
   };
 

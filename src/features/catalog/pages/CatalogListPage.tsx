@@ -41,11 +41,12 @@ export function CatalogListPage() {
       render: (price: number) => formatMoney(price),
     },
     {
-      title: 'Скидка',
-      dataIndex: 'discount',
-      key: 'discount',
-      width: 100,
-      render: (discount: number | null) => (discount ? `${discount}%` : '—'),
+      title: 'Акция',
+      dataIndex: 'salePrice',
+      key: 'salePrice',
+      width: 130,
+      align: 'right',
+      render: (salePrice: number | null) => (salePrice ? formatMoney(salePrice) : '—'),
     },
     {
       title: 'Страна',

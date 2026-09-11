@@ -22,7 +22,8 @@ export interface ProductCardItem {
   article: string;
   name: string;
   price: number;
-  discount: number | null;
+  /** Акционная цена в рублях, null — акции нет. */
+  salePrice: number | null;
   productCountry: string;
   productCategoryName: string;
   productPhoto: ProductPhoto[];
@@ -42,7 +43,8 @@ export interface ProductDetail {
   aroma: string | null;
   taste: string | null;
   foodPairing: string | null;
-  discount: number | null;
+  /** Акционная цена в рублях, null — акции нет. */
+  salePrice: number | null;
   productCountry: string;
   productCategoryName: ProductCategory;
   productPhoto: ProductPhoto[];
@@ -67,7 +69,8 @@ export interface ProductWriteBase {
   aroma?: string;
   taste?: string;
   foodPairing?: string;
-  discount?: number;
+  /** Акционная цена в рублях (не процент). Пусто/0 — акции нет. */
+  salePrice?: number;
   country: string;
 }
 

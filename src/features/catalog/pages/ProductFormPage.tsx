@@ -254,8 +254,13 @@ export function ProductFormPage() {
             <Form.Item name="price" label="Цена" rules={FIELD_RULES.price}>
               <InputNumber min={0} step={10} style={{ width: 200 }} addonAfter="₽" />
             </Form.Item>
-            <Form.Item name="discount" label="Скидка, %" rules={FIELD_RULES.discount}>
-              <InputNumber min={0} max={100} style={{ width: 140 }} />
+            <Form.Item
+              name="salePrice"
+              label="Акционная цена"
+              rules={FIELD_RULES.salePrice}
+              tooltip="Цена по акции для всех покупателей. Пусто — акции нет. Личная скидка клиента на такие товары не начисляется."
+            >
+              <InputNumber min={0} step={10} style={{ width: 200 }} addonAfter="₽" />
             </Form.Item>
           </Space>
           <Form.Item name="country" label="Страна" rules={FIELD_RULES.country}>

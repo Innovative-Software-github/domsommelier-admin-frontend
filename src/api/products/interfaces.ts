@@ -1,3 +1,4 @@
+import type { CatalogReference, Packaging, ExtendedProductAttributes, WineAttributes, SparklingAttributes, SpiritAttributes } from './attributes';
 import type { Page } from '../config/page';
 
 export type ProductCategory =
@@ -48,7 +49,9 @@ export interface ProductDetail {
   productCountry: string;
   productCategoryName: ProductCategory;
   productPhoto: ProductPhoto[];
-  details: Record<string, unknown> | null;
+  brand?: CatalogReference | null;
+  packaging?: Packaging | null;
+  details: (Record<string, unknown> & ExtendedProductAttributes) | null;
 }
 
 export interface ProductReference {
@@ -60,6 +63,8 @@ export interface ProductReference {
 }
 
 export interface ProductWriteBase {
+  brand?: CatalogReference | null;
+  packaging?: Packaging | null;
   category: ProductCategory;
   article: string;
   name: string;
@@ -75,6 +80,7 @@ export interface ProductWriteBase {
 }
 
 export interface WineWriteRequest extends ProductWriteBase {
+  extendedDetails?: WineAttributes | null;
   category: 'wine';
   productionYear: number;
   color: string;
@@ -86,6 +92,7 @@ export interface WineWriteRequest extends ProductWriteBase {
 }
 
 export interface SpiritWriteRequest extends ProductWriteBase {
+  extendedDetails?: SpiritAttributes | null;
   category: 'spirit';
   subcategory: string;
   strength: number;
@@ -95,6 +102,7 @@ export interface SpiritWriteRequest extends ProductWriteBase {
 }
 
 export interface SparklingWriteRequest extends ProductWriteBase {
+  extendedDetails?: SparklingAttributes | null;
   category: 'champagne_and_sparkling';
   subcategory: string;
   sugarContent: string;

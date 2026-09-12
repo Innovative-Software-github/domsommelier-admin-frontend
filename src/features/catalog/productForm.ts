@@ -1,3 +1,4 @@
+import { attributesFromDetail, enumValuesForForm, extraWriteValues } from './attributeValues';
 import type { Rule } from 'antd/es/form';
 import type {
   ProductCategory,
@@ -27,6 +28,9 @@ export function isEditableCategory(category: ProductCategory): boolean {
 
 /** Надмножество полей всех категорий — конкретные используются по категории. */
 export interface ProductFormValues {
+  brand?: unknown;
+  packaging?: unknown;
+  extendedDetails?: unknown;
   // общие
   article: string;
   name: string;
@@ -128,6 +132,9 @@ export function detailToFormValues(
 ): ProductFormValues {
   const d = (product.details ?? {}) as Record<string, unknown>;
   const base: ProductFormValues = {
+    brand: product.brand ?? null,
+    packaging: enumValuesForForm(product.packaging ?? null),
+    extendedDetails: attributesFromDetail(category, d),
     article: product.article,
     name: product.name,
     initialPrice: product.initialPrice,
@@ -188,6 +195,7 @@ export function toWriteRequest(
     foodPairing: trimToUndefined(values.foodPairing),
     salePrice: values.salePrice ?? undefined,
     country: values.country,
+    ...extraWriteValues(category, values.subcategory, values),
   };
 
   switch (category) {

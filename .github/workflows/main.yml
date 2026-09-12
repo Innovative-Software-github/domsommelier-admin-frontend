@@ -13,6 +13,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,15 +24,19 @@ jobs:
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
+          command_timeout: 30m
           username: root
           host: ${{ secrets.HOST }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
+            set -eu
+            exec 9>/root/.domsommelier-deploy.lock
+            flock -w 1800 9
             REPO_DIR=~/projects/domsommelier-admin-frontend
             BACKEND_DIR=~/projects/domsommelier-backend
 
             if [ -d "$REPO_DIR/.git" ]; then
-              cd "$REPO_DIR" && git fetch origin main && git reset --hard origin/main
+              cd "$REPO_DIR" && git fetch origin main && git merge --ff-only origin/main
             else
               mkdir -p ~/projects
               git clone git@github.com:Innovative-Software-github/domsommelier-admin-frontend.git "$REPO_DIR"

@@ -1,3 +1,5 @@
+import { validateAttributeValues } from '../attributeValidation';
+import { ExtendedAttributesFields } from '../components/ExtendedAttributesFields';
 import { useEffect } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
@@ -179,12 +181,19 @@ export function ProductFormPage() {
 
   useEffect(() => {
     if (product) {
-      form.setFieldsValue(detailToFormValues(product.productCategoryName, product));
+      const values = detailToFormValues(product.productCategoryName, product);
+      Object.entries(values).forEach(([key, value]) => form.setFieldValue(key, value));
     }
   }, [form, product]);
 
   const handleSubmit = async (values: ProductFormValues) => {
     const body = toWriteRequest(category, values);
+    const issues = validateAttributeValues(body as unknown as Record<string, unknown>);
+    if (issues.length) {
+      form.setFields(issues);
+      message.error(issues[0].errors[0]);
+      return;
+    }
     try {
       if (isEdit && id) {
         await update(id, body);
@@ -289,6 +298,8 @@ export function ProductFormPage() {
         <Card title={`Характеристики: ${CATEGORY_LABELS[category]}`} style={{ marginBottom: 24 }}>
           <CategoryFields category={category} reference={reference} loading={referenceLoading} />
         </Card>
+
+        <ExtendedAttributesFields category={category} />
 
         <Card title="Фото" style={{ marginBottom: 24 }}>
           {isEdit && id ? (

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ApiHttpError } from '../../../api/config/errors';
 import { getStoreStock } from '../../../api/wineStores/requests';
 import type { StoreStockPage, StoreStockQueryParams } from '../../../api/wineStores/interfaces';
@@ -11,13 +11,20 @@ export function useStoreStock(storeId: number | null) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const requestVersion = useRef(0);
+
   const fetchStock = useCallback(async (id: number, query: StoreStockQueryParams) => {
+    const version = ++requestVersion.current;
     setLoading(true);
+    setPage(null);
     setError(null);
 
     try {
-      setPage(await getStoreStock(id, query));
+      const result = await getStoreStock(id, query);
+      if (version !== requestVersion.current) return;
+      setPage(result);
     } catch (err) {
+      if (version !== requestVersion.current) return;
       let message = 'Не удалось загрузить склад винотеки';
       if (err instanceof ApiHttpError) {
         message = err.status === 403
@@ -31,7 +38,7 @@ export function useStoreStock(storeId: number | null) {
       setError(message);
       setPage(null);
     } finally {
-      setLoading(false);
+      if (version === requestVersion.current) setLoading(false);
     }
   }, []);
 
@@ -42,10 +49,15 @@ export function useStoreStock(storeId: number | null) {
       return;
     }
     void fetchStock(storeId, params);
+    return () => { requestVersion.current++; };
   }, [fetchStock, storeId, params]);
 
   const setSearch = useCallback((search: string) => {
     setParams((prev) => ({ ...prev, search: search || undefined, page: 0 }));
+  }, []);
+
+  const setCategory = useCallback((category?: string) => {
+    setParams(prev => ({ ...prev, category: category || undefined, page: 0 }));
   }, []);
 
   const setPageNumber = useCallback((pageNumber: number, pageSize: number) => {
@@ -66,5 +78,5 @@ export function useStoreStock(storeId: number | null) {
     );
   }, []);
 
-  return { params, page, loading, error, setSearch, setPageNumber, patchQuantity };
+  return { params, page, loading, error, setSearch, setCategory, setPageNumber, patchQuantity };
 }

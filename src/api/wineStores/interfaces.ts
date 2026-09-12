@@ -46,6 +46,7 @@ export interface StoreStockItem {
 }
 
 export interface StoreStockQueryParams {
+  category?: string;
   page?: number;
   size?: number;
   search?: string;
